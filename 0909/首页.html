@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/header.css" />
+		<style type="text/css">
+			.goods li{
+				margin: 20px;
+				width: 350px;
+				height: 600px;
+			}
+			.goods li img{
+				width: 350px;
+				height: 350px;
+			}
+			.goods li a{
+				width: 350px;
+				height: 600px;
+				padding: 0;
+			}
+			.goods li a:hover{
+				color:blue;
+				background: white;
+				text-decoration: none;
+				
+			}
+			.money{
+				color: orange;
+				margin-left:20px ;
+				font-size: 20px;
+			}
+			.more{
+				width: 100px;
+				height: 30px;
+				margin-left:1000px ;
+				float: right;			}
+		</style>
+	</head>
+	<body>
+		
+		<a href="login.html" id="login">登录</a>
+		<a href="register.html">注册</a>
+		<a href="#">用户信息</a>
+		<a href="#">退出</a>
+		<a href="#">购物车</a>
+		<a href="#">我的订单</a>
+		<input class="search" placeholder="请输入要搜索的商品" />
+		
+		<ul class="list">
+			<li><a id="first" href="首页.html">首页</a></li>
+		</ul>
+		<ul class="goods"></ul>
+		<button  class="more">加载更多</button>
+		<script type="text/javascript" src="js/myajax.js" ></script>
+		
+		<script>
+			var oul0=document.getElementsByTagName("ul")[0];
+			var oul1=document.getElementsByTagName("ul")[1];
+			myajax.get("http://h6.duchengjiu.top/shop/api_cat.php",{},function(error,responseText){
+				var json=JSON.parse(responseText);
+				var data=json.data;
+				for(var i=0;i<data.length;i++){
+					var obj=data[i];
+					oul0.innerHTML += `<li>
+					<a href="首页.html?cat_id=${obj.cat_id}"> ${obj.cat_name}
+					</a></li>`
+				}
+			})
+			var cat_id=getQueryString("cat_id");
+			myajax.get("http://h6.duchengjiu.top/shop/api_goods.php?cat_id="+cat_id,{},function(error,responseText){
+				var json=JSON.parse(responseText);
+				var data=json.data;
+				for(var i=0;i<data.length;i++){
+					var obj=data[i];
+					oul1.innerHTML += `<li><a href="#"><img src="${obj.goods_thumb}"/>
+					<div>${obj.goods_name}</div>
+					<div>${obj.goods_desc}</div>
+					<div class="money">${obj.price}</div></a>
+					</li>`;
+				}
+			})
+			var obutton=document.getElementsByClassName("more")[0];
+			var arr=[55,62,69,77,82,92,101,112,125];
+			var n=0;
+			var offsettop=obutton.offsetTop;
+			console.log(offsettop);
+			obutton.onclick=()=>{
+				document.body.style.top=offsettop+"px";
+				offsettop=obutton.offsetTop;
+				myajax.get("http://h6.duchengjiu.top/shop/api_goods.php?cat_id="+arr[n],{},function(error,responseText){
+				var json=JSON.parse(responseText);
+				var data=json.data;
+				n++;
+				for(var i=0;i<data.length;i++){
+					var obj=data[i];
+					oul1.innerHTML += `<li><a href="#"><img src="${obj.goods_thumb}"/>
+					<div>${obj.goods_name}</div>
+					<div>${obj.goods_desc}</div>
+					<div class="money">${obj.price}</div></a>
+					</li>`;
+				}
+			})
+				
+			}
+		</script>
+	</body>
+</html>
