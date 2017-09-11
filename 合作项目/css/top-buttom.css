@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+ul{
+    list-style: none;
+}
+
+
+/*top头部*/
+#top{
+    width: 100%;
+    background-color: #25292e;
+}
+#top-box{
+    width: 1000px;
+    height: 56px;
+    margin: 0 auto;
+}
+#top-box>a{
+    display: block;
+    width: 96px;
+    height: 40px;
+    float: left;
+    margin: 10px 0;
+    background: url("../images/icon.png") no-repeat 0 0;
+}
+#top-box>a:hover{
+    opacity: 0.8;
+}
+#top-box>div{
+    height: 56px;
+    float: right;
+    line-height: 56px;
+}
+#top-box>div>ul>li{
+    float: left;
+    height: 56px;
+    padding: 0 16px;
+    font-size: 12px;
+}
+#top-box>div>ul>li>a{
+     color: #666666;
+}
+#top-box>div>ul>li:hover>a{
+    color: #cccccc;
+}
+.select{
+    position: relative;
+}
+.select>div{
+    position: absolute;
+    background-color: #292f34;
+    display: none;
+    top:56px;
+    color: #cccccc;
+}
+#shopping-cartBox{
+    width: 320px;
+    height: 120px;
+    left: -130px;
+}
+#shopping-cart{
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+}
+#shopping-cartBotton{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #7dbfde;
+}
+#shopping-cartBotton:hover{
+    background-color: #96c8e0;
+}
+#news{
+    width: 160px;
+    height: 270px;
+    left: -69px;
+    padding: 0 15px;
+}
+#news>ul>li{
+    height: 44px;
+    width: 160px;
+    line-height: 44px;
+    border-bottom: 1px solid #3f4449;
+}
+#news>ul>li>span{
+    float: right;
+}
+.select:hover{
+    background-color: #292f34;
+}
+.select:hover>div{
+    display: block;
+}
+#top-box>div>ul>.login>a{
+    color: #cccccc;
+    display: inline-block;
+    margin-left: 10px;
+}
+#top-box>div>ul>.separate{
+    padding: 0;
+}
+.separate>span{
+    display: inline-block;
+    height: 8px;
+    border-left: 1px solid #525961;
+}
+#top-box>div>ul>.last-list{
+    padding-right: 0;
+}
+
+
+
+/*nav导航*/
+#body-box{
+    width: 100%;
+    overflow: hidden;
+}
+#nav{
+    width: 1000px;
+    height: 45px;
+    margin: 0 auto;
+    border-bottom: 4px solid #ededed;
+}
+#nav>ul{
+    width: 760px;
+    height: 45px;
+    float: left;
+}
+#nav>ul>li{
+    width: 122px;
+    height: 45px;
+    float: left;
+    margin: 0 15px;
+    font-size: 15px;
+    line-height: 45px;
+    text-align: center;
+    color: #333333;
+}
+#nav>ul>li:hover{
+    border-bottom: 4px solid #25292e;
+}
+#nav>ul>li>a{
+    display: block;
+    width: 122px;
+    height: 45px;
+}
