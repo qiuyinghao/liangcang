@@ -25,7 +25,6 @@
 				line-height: 40px;
 			}
 			div>p>span{
-				display: none;
 				color: red;
 			}
 			div .btn{
@@ -44,18 +43,22 @@
 				<label>帐号: </label>
 				<input type="text" name="username" id="username" placeholder="请输入8-12位数字字母帐号"/>
 				<br/>
-				<span>帐号未注册</span>
+				<span class="userspan"></span>
 			</p>
 			<p>
 				<label>密码: </label>
 				<input type="password" name="password" id="password" placeholder="请输入密码"/>
+				<br/>
+				<span class="passspan"></span>
 			</p>
 			<div id="btn" class="btn">登录</div>
 		</div>
 		<script src="shop/js/myajax.js"></script>
 		<script>
 			var oUsername = document.querySelector("input[name=username]");
-			var oPassword = document.querySelector("input[name=username]");
+			var oPassword = document.querySelector("input[name=password]");
+			var oUserspan = document.querySelector(".userspan");
+			var oPassspan = document.querySelector(".passspan");
 			var oBtn = document.querySelector(".btn");
 			oBtn.onclick = function(){
 				myajax.post("http://h6.duchengjiu.top/shop/api_user.php",
@@ -68,12 +71,22 @@
 					console.log(json);
 					localStorage.token = json.data.token;
 					localStorage.username = json.data.username;
-					console.log(localStorage.token);
-					console.log(localStorage.username);
-					if (localStorage.backur) {
-						location.href = localStorage.backurl;
-					}else {
-						location.href = "index.html"
+//					console.log(localStorage.token);
+//					console.log(localStorage.username);
+					if (json.code == 2002){
+						oPassspan.innerText = null;
+						oUserspan.innerText = json.message;
+						console.log(oUserspan.value)
+					}else if(json.code == 1001){
+						oUserspan.innerText = null;
+						oPassspan.innerText = json.message;
+						oPassword.value = null;
+					}else if(json.code == 0){
+						if (localStorage.backur) {
+							location.href = localStorage.backurl;
+						}else {
+							location.href = "homepage.html"
+						}
 					}
 				})
 			}
