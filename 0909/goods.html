@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>商品详情</title>
+		<style>
+			.goods{
+				margin: 100px 0 0 200px;
+			}
+			.money{
+				color: orange;
+				margin-left:20px ;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="goods"></div>
+	</body>
+	<script type="text/javascript" src="js/myajax.js" ></script>
+	<script>
+		var ogoods=document.getElementsByClassName('goods')[0];
+		var goods_id=getQueryString("goods_id");
+		myajax.get("http://h6.duchengjiu.top/shop/api_goods.php?goods_id=34230",{},function(error,responseText){
+			var json=JSON.parse(responseText);
+			var obj=json.data[0];
+			ogoods.innerHTML=`<div class="goods"><div><img src="${obj.goods_thumb}"/></div>
+			<div>${obj.goods_name}</div>
+			<div class="money">${obj.price}</div>
+			<div><input id="joincart" type="button" value="加入购物车"/></div>
+			</div>`
+		})
+		var goods_id=getQueryString("goods_id");
+		document.body.onclick=function(event){
+			event=event||window.event;
+			var target=event.target||event.srcElement;
+			if(target.id==="joincart"){
+				console.log(localStorage.token);
+			if(!localStorage.token){
+				alert("请登录账号，再购买");
+				location.href="login.html";
+				return
+			}else{
+				myajax.post("http://h6.duchengjiu.top/shop/api_cart.php?token="+localStorage.token,
+				{goods_id:goods_id,number:1},function(error,responseText){
+					var json=JSON.parse(responseText);
+					console.log(json)
+					if(json.code===0){
+						alert("加入购物车成功")
+						location.href="homepage.html";
+					}
+				})
+			}
+			}
+		}
+	</script>
+</html>
