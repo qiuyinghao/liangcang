@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 500px;
+				height: 400px;
+				margin: 100px auto;
+				background-color: lightseagreen;
+				text-align: center;
+			}
+			div>p{
+				padding-top: 50px;
+				height: 50px;
+				line-height: 50px;
+			}
+			div>p>input{
+				height: 40px;
+				border: 1px solid #DDDDDD;
+				text-indent: 5px;
+			}
+			div>p>label{
+				line-height: 40px;
+			}
+			div>p>span{
+				display: none;
+				color: red;
+			}
+			div .btn{
+				width: 200px;
+				height: 40px;
+				line-height: 40px;
+				margin-top: 60px;
+				background-color: dodgerblue;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<p>
+				<label>帐号: </label>
+				<input type="text" name="username" id="username" placeholder="请输入8-12位数字字母帐号"/>
+				<br/>
+				<span>帐号未注册</span>
+			</p>
+			<p>
+				<label>密码: </label>
+				<input type="password" name="password" id="password" placeholder="请输入密码"/>
+			</p>
+			<div id="btn" class="btn">登录</div>
+		</div>
+		<script src="js/myajax.js"></script>
+		<script>
+			var oUsername = document.querySelector("input[name=username]");
+			var oPassword = document.querySelector("input[name=password]");
+			var oBtn = document.querySelector(".btn");
+			console.log(oPassword)
+			oBtn.onclick = function(){
+				myajax.post("http://h6.duchengjiu.top/shop/api_user.php",
+				{
+					status: "login",
+					username: oUsername.value,
+					password: oPassword.value
+				}, function(error, responseText){
+					var json = JSON.parse(responseText);
+					localStorage.token = json.data.token;
+					localStorage.username = json.data.username;
+					console.log(localStorage);
+					console.log(localStorage.username);
+					console.log(oPassword.value);
+					if (localStorage.backur) {
+						location.href = localStorage.backurl;
+					}else {
+						location.href = "homepage.html"
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

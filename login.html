@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -93,3 +94,100 @@
 		</script>
 	</body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 500px;
+				height: 400px;
+				margin: 100px auto;
+				background-color: lightseagreen;
+				text-align: center;
+			}
+			div>p{
+				padding-top: 50px;
+				height: 50px;
+				line-height: 50px;
+			}
+			div>p>input{
+				height: 40px;
+				border: 1px solid #DDDDDD;
+				text-indent: 5px;
+			}
+			div>p>label{
+				line-height: 40px;
+			}
+			div>p>span{
+				color: red;
+			}
+			div .btn{
+				width: 200px;
+				height: 40px;
+				line-height: 40px;
+				margin-top: 60px;
+				background-color: dodgerblue;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<p>
+				<label>帐号: </label>
+				<input type="text" name="username" id="username" placeholder="请输入8-12位数字字母帐号"/>
+				<br/>
+				<span class="userspan"></span>
+			</p>
+			<p>
+				<label>密码: </label>
+				<input type="password" name="password" id="password" placeholder="请输入密码"/>
+				<br/>
+				<span class="passspan"></span>
+			</p>
+			<div id="btn" class="btn">登录</div>
+		</div>
+		<script src="shop/js/myajax.js"></script>
+		<script>
+			var oUsername = document.querySelector("input[name=username]");
+			var oPassword = document.querySelector("input[name=password]");
+			var oUserspan = document.querySelector(".userspan");
+			var oPassspan = document.querySelector(".passspan");
+			var oBtn = document.querySelector(".btn");
+			oBtn.onclick = function(){
+				myajax.post("http://h6.duchengjiu.top/shop/api_user.php",
+				{
+					status: "login",
+					username: oUsername.value,
+					password: oPassword.value
+				}, function(error, responseText){
+					var json = JSON.parse(responseText);
+					console.log(json);
+					localStorage.token = json.data.token;
+					localStorage.username = json.data.username;
+//					console.log(localStorage.token);
+//					console.log(localStorage.username);
+					if (json.code == 2002){
+						oPassspan.innerText = null;
+						oUserspan.innerText = json.message;
+						console.log(oUserspan.value)
+					}else if(json.code == 1001){
+						oUserspan.innerText = null;
+						oPassspan.innerText = json.message;
+						oPassword.value = null;
+					}else if(json.code == 0){
+						if (localStorage.backur) {
+							location.href = localStorage.backurl;
+						}else {
+							location.href = "homepage.html"
+						}
+					}
+				})
+			}
+		</script>
+	</body>
+</html>
+>>>>>>> b1a22a4688f0ab02c40b06488ba5a1215497acf4

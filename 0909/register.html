@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册页面</title>
+		<link rel="stylesheet" href="css/header.css" />
+		<style>
+			
+			*{margin: 0;padding: 0;}
+			.login{
+				width: 500px;
+				height: 400px;
+				margin: 100px auto;
+				background: #ABCDEF;
+				
+			}
+			input{
+				width: 300px;
+				height: 40px;
+				margin: 10px 0px 10px 0px;
+			}
+			b{
+			margin: 10px 0px 10px 80px;	
+			}
+			span{
+				display: block;
+				height: 30px;
+				color: red;
+				margin-left:118px ;
+			}
+			#firs{
+				margin-top:60px ;
+			}
+			#sbumit{
+				margin: 10px 0px 10px 118px;	
+			}
+		</style>
+	</head>
+	<body>
+		
+			<a href="login.html" id="login">登录</a>
+		<a href="#">注册</a>
+		<a href="#">用户信息</a>
+		<a href="#">退出</a>
+		<a href="#">购物车</a>
+		<a href="#">我的订单</a>
+		<input class="search" placeholder="请输入要搜索的商品" />
+		
+		<ul class="list">
+			<li><a id="first" href="homepage.html">首页</a></li>
+		</ul>
+		<div class="login">
+			<b>账号:</b><input id="firs" type="text" placeholder="请填写3-20位的英文数字下划线"/>
+			<span></span>
+			<b>密码:</b><input type="text" placeholder="密码最小长度为6位" />
+			<span></span>
+			<input  id="sbumit" type="button" value="注册"/>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/myajax.js" ></script>
+	<script>
+		var oul0=document.getElementsByTagName("ul")[0];
+			myajax.get("http://h6.duchengjiu.top/shop/api_cat.php",{},function(error,responseText){
+				var json=JSON.parse(responseText);
+				var data=json.data;
+				for(var i=0;i<data.length;i++){
+					var obj=data[i];
+					oul0.innerHTML += `<li>
+					<a href="homepage.html?cat_id=${obj.cat_id}"> ${obj.cat_name}
+					</a></li>`
+				}
+			})
+			var cat_id=getQueryString("cat_id");
+		var ospan=document.getElementsByTagName("span");
+		var oinput=document.getElementsByTagName("input");
+		oinput[3].onclick=function(){
+			myajax.post("http://h6.duchengjiu.top/shop/api_user.php",{
+		    status:"register",
+			username:oinput[1].value,
+			password:oinput[2].value},function(error,responseText){
+				console.log(ospan)
+			var json=JSON.parse(responseText);
+			console.log(json)
+				if(json.code===0){
+					alert("注册成功");
+//					ospan[0].innerText=null;
+//					ospan[1].innerText=null;
+					location.href="login.html"
+				}else if(json.code===2001||json.code===1000){
+					if(oinput[1].value===""){
+						ospan[0].innerText="账号不能为空"
+					}else{
+						ospan[0].innerText=json.message;
+//						oinput[1].value=null;
+					ospan[1].innerText=null;
+					}
+				}else{
+//					ospan[0].innerText=null;
+					ospan[1].innerText=json.message;
+					oinput[2].value=null;
+				}
+			})
+		}
+	</script>
+</html>

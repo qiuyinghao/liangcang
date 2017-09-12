@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车</title>
+		<style>
+			td{
+				padding: 10px;
+				border: 1px solid black;
+				text-align: center;
+			}
+			table {
+			  border-collapse: collapse;
+			  width: 900px;
+			  text-align: center;
+			  margin-left:250px ;
+			}
+			table img {
+			  border-radius: 50%;
+			  width: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<table>
+			<tr>
+			<td>商品ID</td>
+			<td>图片</td>
+			<td>名称</td>
+			<td>数量</td>
+			<td>单价</td>
+			<td>总价</td>
+			<td>操作</td>
+		</tr>
+		</table>
+		<div>小计:<span id="sum">0</span><button>清空购物车</button><a href="checkout.html">结算</a></div>
+	</body>
+	<script type="text/javascript" src="js/myajax.js" ></script>
+	<script>
+		var otable=document.getElementsByTagName("table")[0];
+		var osum=document.getElementById("sum");
+	</script>
+</html>
